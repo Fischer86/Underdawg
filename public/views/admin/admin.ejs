@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - UnderDawg</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="main-container">
+        <section class="admin-section">
+            <h2>Add New UFC Event</h2>
+            <form action="/add-event" method="POST">
+                <div class="form-group">
+                    <label for="name">Event Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Event Date</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="poster_url">Poster URL</label>
+                    <input type="text" id="poster_url" name="poster_url">
+                </div>
+                <button type="submit">Add Event</button>
+            </form>
+        </section>
+
+        <section class="admin-section">
+            <h2>Add Fight to Event</h2>
+            <form action="/add-fight" method="POST" class="admin-form">
+                <div class="form-group">
+                    <label for="event_select">Select Event</label>
+                    <select id="event_select" name="event_id" required>
+                        <option value="">Select an event...</option>
+                        <% events.forEach(function(event) { %>
+                            <option value="<%= event.id %>"><%= event.name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="is_main_event">Is Main Event?</label>
+                    <input type="checkbox" id="is_main_event" name="is_main_event">
+                </div>
+                <div class="form-group">
+                    <label for="fighter1_name">Fighter 1 Name</label>
+                    <input type="text" id="fighter1_name" name="fighter1_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="fighter2_name">Fighter 2 Name</label>
+                    <input type="text" id="fighter2_name" name="fighter2_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="fighter1_image_url">Fighter 1 Image URL</label>
+                    <input type="text" id="fighter1_image_url" name="fighter1_image_url">
+                </div>
+                <div class="form-group">
+                    <label for="fighter2_image_url">Fighter 2 Image URL</label>
+                    <input type="text" id="fighter2_image_url" name="fighter2_image_url">
+                </div>
+                <div class="form-group">
+                    <label for="weight_class">Weight Class</label>
+                    <input type="text" id="weight_class" name="weight_class" required>
+                </div>
+                <div class="form-group">
+                    <label for="fight_date">Fight Date</label>
+                    <input type="date" id="fight_date" name="fight_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="number_of_rounds">Number of Rounds</label>
+                    <input type="number" id="number_of_rounds" name="number_of_rounds" min="1" required>
+                </div>
+                <button type="submit" class="btn">Add Fight</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="/js/admin.js"></script>
+    <% if (messages.success) { %>
+        <script>
+            alert("<%= messages.success %>");
+        </script>
+    <% } %>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= event.name %> - UnderDawg</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        .event-background {
+            background-image: url('<%= event.poster_url %>'); /* Image de l'événement */
+            background-size: cover; /* Couvrir toute la zone */
+            background-position: center; /* Centrer l'image */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0; /* En arrière-plan */
+            opacity: 0.5; /* Opacité pour le dégradé */
+        }
+
+        .main-container {
+            position: relative; /* Pour positionner le tableau par rapport à l'arrière-plan */
+            z-index: 1; /* S'assurer que le contenu est au-dessus de l'arrière-plan */
+            padding: 20px; /* Ajout d'un peu de padding */
+        }
+
+        .fights-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.7); /* Fond noir semi-transparent pour le tableau */
+            position: relative;
+            z-index: 1; /* Pour s'assurer que le tableau est au-dessus de l'arrière-plan */
+            margin-top: 20px; /* Espace au-dessus du tableau */
+        }
+
+        .fights-table th, .fights-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            color: white; /* Texte en blanc pour le contraste */
+        }
+
+        .fights-table th {
+            background-color: rgba(0, 0, 0, 0.8); /* Fond sombre pour l'en-tête */
+        }
+
+        .main-event {
+            border: 2px solid red; /* Encadré rouge pour le main event */
+            background-color: rgba(255, 0, 0, 0.1); /* Fond léger pour le main event */
+        }
+
+        .fighter-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fighter-image {
+            width: 50px;
+            height: 50px;
+        }
+
+        .fight-row {
+            cursor: pointer; /* Indique que la ligne est cliquable */
+        }
+
+        /* Dégradé si le tableau dépasse la hauteur de l'image */
+        .fights-table-container {
+            position: relative;
+            overflow: hidden; /* Pour cacher le débordement */
+        }
+
+        .fights-table-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+            z-index: 0; /* En arrière-plan */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">UnderDawg</div>
+        <nav class="nav-links">
+            <a href="/">Dashboard</a>
+            <a href="/predictions">My Predictions</a>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <h1><%= event.name %></h1>
+        <div style="display: flex; justify-content: space-between;">
+            <p>Date: <%= new Date(event.event_date).toLocaleDateString() %></p>
+            <p>Location: <%= event.location %></p>
+        </div>
+        <% if (event.poster_url) { %>
+            <img src="<%= event.poster_url %>" alt="<%= event.name %>" style="display: none;"> <!-- Image cachée -->
+        <% } %>
+
+        <h2>Fights</h2>
+        <div class="event-background"></div> <!-- Arrière-plan de l'événement -->
+        <div class="fights-table-container">
+            <table class="fights-table">
+                <thead>
+                    <tr>
+                        <th>Fighter 1</th>
+                        <th>Weight Class</th>
+                        <th>Fighter 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% fights.forEach(fight => { %>
+                        <tr class="fight-row <%= fight.main_event ? 'main-event' : '' %>" onclick="window.location.href='/parlay/<%= fight.id %>'">
+                            <td class="fighter-info">
+                                <img src="<%= fight.fighter1_image_url %>" alt="<%= fight.fighter1_name %>" class="fighter-image">
+                                <%= fight.fighter1_name %>
+                            </td>
+                            <td><%= fight.weight_class %></td>
+                            <td class="fighter-info">
+                                <img src="<%= fight.fighter2_image_url %>" alt="<%= fight.fighter2_name %>" class="fighter-image">
+                                <%= fight.fighter2_name %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

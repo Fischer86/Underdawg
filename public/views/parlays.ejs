@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Parlays - UnderDawg</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <div class="main-container">
+        <% if (user) { %>
+            <h1>Your Parlays</h1>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h3>Success Rate</h3>
+                    <p><%= user.correct_predictions %> / <%= user.total_predictions %></p>
+                    <p><%= user.total_predictions > 0 ? Math.round(user.correct_predictions / user.total_predictions * 100) : 0 %>%</p>
+                </div>
+            </div>
+
+            <div class="user-parlays">
+                <% userParlays.forEach(parlay => { %>
+                    <div class="parlay-card">
+                        <h3>Fight: <%= parlay.fightName %></h3>
+                        <p>Your Prediction: <%= parlay.winner %></p>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p>Please <a href="user/login">login</a> to view your parlays.</p>
+        <% } %>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

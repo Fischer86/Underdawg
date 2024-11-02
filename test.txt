@@ -1,0 +1,5 @@
+Base de données, tables :
+- events : id, name, date, poster_url
+- fights : id, name1, name2, image1, image2, weight_class, fight_type, status, winner, result, winning_round
+- users : id, username, password, email, admin
+

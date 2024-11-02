@@ -1,0 +1,117 @@
+:root {
+    --primary-color: #d20a0a;
+    --secondary-color: #1b1b1b;
+    --accent-color: #ffffff;
+    --text-color: #ffffff;
+    --background-dark: #000000;
+    --background-light: #2a2a2a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--background-dark);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.header {
+    background: var(--secondary-color);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: var(--primary-color);
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.event-card, .fight-card, .prediction-card {
+    background: var(--background-light);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    padding: 1rem;
+}
+
+.event-card:hover, .fight-card:hover, .prediction-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-info, .fight-info {
+    padding: 1.5rem;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.stat-box {
+    background: var(--background-light);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.recent-fights, .user-predictions {
+    margin-top: 2rem;
+}
+
+.user-parlays {
+    margin-top: 2rem;
+}
+
+.parlay-card {
+    background: var(--background-light);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s;
+}
+
+.parlay-card:hover {
+    transform: translateY(-5px);
+}

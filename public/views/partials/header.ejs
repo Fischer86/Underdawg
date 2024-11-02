@@ -1,0 +1,16 @@
+<header class="header">
+    <div class="header-content">
+        <div class="logo">UnderDawg</div>
+        <nav class="nav-links">
+            <% if (user) { %>
+                <span class="user-info">Points: <%= user.points %></span>
+                <a href="/events">UFC Events</a>
+                <a href="/parlays">My Parlays</a>
+                <a href="/logout" class="logout-btn">Logout</a>
+            <% } else { %>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            <% } %>
+        </nav>
+    </div>
+</header>

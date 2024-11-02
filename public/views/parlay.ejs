@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Prediction - UnderDawg</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        body {
+            background-color: #1c1c1c; /* Fond sombre pour l'esprit UFC */
+            color: white; /* Texte en blanc */
+            font-family: Arial, sans-serif;
+        }
+
+        .main-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .fighter-selection {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .fighter-card {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 120px; /* Largeur fixe pour les cartes */
+            background-color: rgba(255, 0, 0, 0.1); /* Fond léger pour les cartes */
+        }
+
+        .fighter-card:hover {
+            transform: scale(1.05);
+            border-color: #ffcc00; /* Couleur de survol */
+        }
+
+        .fighter-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; /* Pour rendre l'image ronde */
+        }
+
+        .vs {
+            font-size: 2em;
+            margin: 0 20px;
+            color: #ffcc00; /* Couleur dorée pour le "VS" */
+        }
+
+        .round-buttons {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .round-button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            border: 1px solid #ff0000; /* Bord rouge */
+            border-radius: 5px;
+            background-color: #ff0000; /* Fond rouge */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .round-button:hover {
+            background-color: #cc0000; /* Couleur de survol */
+        }
+
+        .round-button:active {
+            transform: scale(0.95); /* Réduction de taille lors de l'enfoncement */
+        }
+
+        .method-select {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .method-select select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #333; /* Fond sombre pour le menu déroulant */
+            color: white;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff; /* Couleur bleue */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            font-size: 1.2em; /* Taille du texte */
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3; /* Couleur de survol */
+        }
+
+        .submit-button:active {
+            transform: scale(0.95); /* Réduction de taille lors de l'enfoncement */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">UnderDawg</div>
+        <nav class="nav-links">
+            <a href="/">Dashboard</a>
+            <a href="/predictions">My Predictions</a>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <h1>Make a Prediction for Fight ID: <%= fightId %></h1>
+        <form action="/parlay" method="POST">
+            <input type="hidden" name="fight_id" value="<%= fightId %>">
+
+            <h2>Select a Fighter</h2>
+            <div class="fighter-selection">
+                <div class="fighter-card" onclick="document.getElementById('selectedFighter').value = '<%= fighters[0].name %>';">
+                    <img src="<%= fighters[0].image_url %>" alt="<%= fighters[0].name %>" class="fighter-image">
+                    <p><%= fighters[0].name %></p>
+                </div>
+                <div class="vs">VS</div>
+                <div class="fighter-card" onclick="document.getElementById('selectedFighter').value = '<%= fighters[1].name %>';">
+                    <img src="<%= fighters[1].image_url %>" alt="<%= fighters[1].name %>" class="fighter-image">
+                    <p><%= fighters[1].name %></p>
+                </div>
+            </div>
+            <input type="hidden" id="selectedFighter" name="fighter_id" required>
+
+            <h3>Select Round</h3>
+            <div class="round-buttons">
+                <% for (let i = 1; i <= numberOfRounds; i++) { %>
+                    <button type="button" class="round-button" onclick="document.getElementById('selectedRound').value = '<%= i %>';">
+                        <%= i %>
+                    </button>
+                <% } %>
+            </div>
+            <input type="hidden" id="selectedRound" name="round" required>
+
+            <h3>Select Method of Victory</h3>
+            <div class="method-select">
+                <select name="method" required>
+                    <option value="">Select Method</option>
+                    <option value="KO">Knockout (KO)</option>
+                    <option value="TKO">Technical Knockout (TKO)</option>
+                    <option value="Submission">Submission</option>
+                    <option value="Decision">Decision</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-button">Submit Prediction</button>
+        </form>
+    </div>
+</body>
+</html>

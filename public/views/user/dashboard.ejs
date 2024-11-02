@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - UnderDawg</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="main-container">
+        <% if (user) { %>
+            <h1>Welcome back, <%= user.username %></h1>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h3>Prediction Accuracy</h3>
+                    <p><%= user.correct_predictions %> / <%= user.total_predictions %></p>
+                    <p><%= user.total_predictions > 0 ? Math.round(user.correct_predictions / user.total_predictions * 100) : 0 %>%</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Total Points</h3>
+                    <p><%= user.points %></p>
+                </div>
+            </div>
+
+            <h2>Upcoming UFC Events</h2>
+            <div class="events-grid">
+                <% events.forEach(event => { %>
+                    <div class="event-card">
+                        <% if (event.poster_url) { %>
+                            <img src="<%= event.poster_url %>" alt="<%= event.name %>">
+                        <% } %>
+                        <div class="event-info">
+                            <h3><%= event.name %></h3>
+                            <p><%= new Date(event.event_date).toLocaleDateString() %></p>
+                            <p><%= event.location %></p>
+                            <a href="/events/<%= event.id %>" class="btn">View Fights</a>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+
+            <h2>Recent Fights</h2>
+            <div class="recent-fights">
+                <% recentFights.forEach(fight => { %>
+                    <div class="fight-card">
+                        <h3><%= fight.name1 %> vs <%= fight.name2 %></h3>
+                        <p>Winner: <%= fight.winner %></p>
+                        <p>Result: <%= fight.result %></p>
+                    </div>
+                <% }); %>
+            </div>
+
+            <h2>Your Parlays</h2>
+            <div class="user-parlays">
+                <% userParlays.forEach(parlay => { %>
+                    <div class="parlay-card">
+                        <h3>Fight: <%= parlay.fightName %></h3>
+                        <p>Your Prediction: <%= parlay.winner %></p>
+                    </div>
+                <% }); %>
+            </div>
+
+            <h2>Recent UFC Events</h2>
+            <div class="events-grid">
+                <% recentEvents.forEach(event => { %>
+                    <div class="event-card">
+                        <% if (event.poster_url) { %>
+                            <img src="<%= event.poster_url %>" alt="<%= event.name %>">
+                        <% } %>
+                        <div class="event-info">
+                            <h3><%= event.name %></h3>
+                            <p class="event-date"><%= new Date(event.event_date).toLocaleDateString() %></p>
+                            <p class="event-location"><%= event.location %></p>
+                            <a href="/events/<%= event.id %>" class="btn">View Fight Card</a>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p>Please <a href="/login">login</a> to view your dashboard.</p>
+        <% } %>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

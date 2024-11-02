@@ -1,0 +1,56 @@
+<!-- Example for events.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC Events - UnderDawg</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">UnderDawg</div>
+        <nav class="nav-links">
+            <a href="/">Dashboard</a>
+            <a href="/predictions">My Predictions</a>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <h1>Upcoming UFC Events</h1>
+        <div class="events-grid">
+            <% events.forEach(event => { %>
+                <div class="event-card">
+                    <% if (event.poster_url) { %>
+                        <img src="<%= event.poster_url %>" alt="<%= event.name %>">
+                    <% } %>
+                    <div class="event-info">
+                        <h3><%= event.name %></h3>
+                        <p class="event-date"><%= new Date(event.event_date).toLocaleDateString() %></p>
+                        <p class="event-location"><%= event.location %></p>
+                        <a href="/events/<%= event.id %>" class="btn">View Fight Card</a>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+
+        <h2>Recent UFC Events</h2>
+        <div class="events-grid">
+            <% recentEvents.forEach(event => { %>
+                <div class="event-card">
+                    <% if (event.poster_url) { %>
+                        <img src="<%= event.poster_url %>" alt="<%= event.name %>">
+                    <% } %>
+                    <div class="event-info">
+                        <h3><%= event.name %></h3>
+                        <p class="event-date"><%= new Date(event.event_date).toLocaleDateString() %></p>
+                        <p class="event-location"><%= event.location %></p>
+                        <a href="/events/<%= event.id %>" class="btn">View Fight Card</a>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>
